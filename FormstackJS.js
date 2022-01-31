@@ -272,13 +272,14 @@ function(window, $) {
                 a = document.getElementById("field" + r + "Y").options,
                 n = parseInt(a[1].value, 10),
                 s = parseInt(a[a.length - 1].value, 10),
+                myMinDate,
                 l = (new Date).getFullYear();
             n < 100 && (n += l - 2e3 < n ? 1900 : 2e3), s < 100 && (s += 2e3);
             a = this.getCalendarFormat(r), l = $("#" + i.id + "Link");
             if (!$.datepicker) return void l.css("display", "none");
             i = document.getElementById("field" + r + "MaxDate"), s = i ? new Date(i.value) : new Date(s, 11, 31);
             l.datepicker({
-                minDate: new Date(n, 0, 1),
+                minDate: (myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value, myMinDate ? new Date(myMinDate) :  new Date(n, 0, 1)),
                 maxDate: s,
                 buttonImage: $("#fsCalendar" + r + "ImageUrl").html(),
                 buttonImageOnly: !0,
@@ -1443,7 +1444,56 @@ function(window, $) {
             r = !n && !o && a && !s,
             t = !1;
         return (-1 < this.getFieldContainer(e).className.indexOf("fsHidden") || $(e).closest(".fsSection").hasClass("fsHidden")) && (t = !0), 2 === n.length && (n = "20" + n), !!(r && !i || t) || !(!n || !o || a && !s) && new Date(n, o - 1, s) <= new Date(l.replace(/-/g, "/"))
-    }, Formstack.Form.prototype.checkFormatNumber = function(e) {
+    }, Formstack.Form.prototype.checkFormatMinDate = function (e) {
+        var t = e.id.slice(0, -1),
+            i = document.getElementById(t + "Y"),
+            r = document.getElementById(t + "M"),
+            a = document.getElementById(t + "D"),
+            n = i.options[i.selectedIndex].value,
+            o = r.selectedIndex,
+            s = a ? a.selectedIndex : 1,
+            l = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
+            //l = document.getElementById(t + "MinDate").value,
+            i = -1 < e.className.indexOf("fsRequired"),
+            r = !n && !o && a && !s,
+            t = !1;
+        return (-1 < this.getFieldContainer(e).className.indexOf("fsHidden") || $(e).closest(".fsSection").hasClass("fsHidden")) 
+            && (t = !0)
+            , 
+            //if year is 2 digit make it 4
+            2 === n.length && (n = "20" + n)
+            , 
+    
+            
+            !!(r && !i || t) || !(!n || !o || a && !s) 
+            && 
+            new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
+        }, Formstack.Form.prototype.checkFormatBlackOutDates = function (e) {
+        var t = e.id.slice(0, -1),
+            i = document.getElementById(t + "Y"),
+            r = document.getElementById(t + "M"),
+            a = document.getElementById(t + "D"),
+            n = i.options[i.selectedIndex].value,
+            o = r.selectedIndex,
+            s = a ? a.selectedIndex : 1,
+            l = document.querySelector("div[fs-field-validation-name='BlackOutDates'] textarea").value,
+            //l = document.getElementById(t + "MinDate").value,
+            i = -1 < e.className.indexOf("fsRequired"),
+            r = !n && !o && a && !s,
+            t = !1;
+        return (-1 < this.getFieldContainer(e).className.indexOf("fsHidden") || $(e).closest(".fsSection").hasClass("fsHidden")) 
+            && (t = !0)
+            , 
+            //if year is 2 digit make it 4
+            2 === n.length && (n = "20" + n)
+            , 
+    
+            
+            !!(r && !i || t) || !(!n || !o || a && !s) 
+            && 
+            $.inArray(""+o+"/"+s+"/"+n, l.split(";")) == -1
+            //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
+        }, Formstack.Form.prototype.checkFormatNumber = function(e) {
         var t, i, r = e.value.replace(/[^\d\.\-]/g, ""),
             a = this.getNumberProperties(e),
             n = [],

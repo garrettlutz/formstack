@@ -1493,7 +1493,64 @@ function(window, $) {
             && 
             $.inArray(""+o+"/"+s+"/"+n, l.split(";")) == -1
             //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
-        }, Formstack.Form.prototype.checkFormatNumber = function(e) {
+        }, Formstack.Form.prototype.checkFormatUniqueDates = function (e) {
+
+            // get current date field id
+            var t = e.id.slice(0, -1),
+                // yearField = document.getElementById(t + "Y"),
+                // monthField = document.getElementById(t + "M"),
+                // dayField = document.getElementById(t + "D"),
+                // yearVal = yearField.options[i.selectedIndex].value,
+                // monthVal = monthField.selectedIndex,
+                // dayVal = dayField ? dayField.selectedIndex : 1,
+                uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='UniqueDateFields'] textarea").value.split(";"),
+                currentFieldName = this.getContainer(e, "fsCell").getAttribute("fs-field-validation-name");
+                currentFieldDate = this.getDateFromFieldId(t),
+                
+                fieldNameIndex = uniqueDateFieldsArray.indexOf(currentFieldName),
+                //l = document.getElementById(t + "MinDate").value,
+                i = -1 < e.className.indexOf("fsRequired"),
+                r = !n && !o && a && !s,
+                uniqueDates = [],
+                t = !1;
+
+                if (fieldNameIndex > -1){
+                    uniqueDateFieldsArray.splice(fieldNameIndex, 1);
+                    uniqueDateFieldsArray.forEach(function(x){
+                        var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id;
+                        
+                        uniqueDates.push(this.getDateFromFieldId(fieldId));
+                        
+                    });
+
+                }
+                
+                 
+
+            return (-1 < this.getFieldContainer(e).className.indexOf("fsHidden") || $(e).closest(".fsSection").hasClass("fsHidden")) 
+                && (t = !0)
+                , 
+                //if year is 2 digit make it 4
+                2 === n.length && (n = "20" + n)
+                , 
+        
+                
+                // !!(r && !i || t) || !(!n || !o || a && !s) 
+                // && 
+                $.inArray(currentFieldDate, uniqueDates) == -1
+                //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
+        }, Formstack.Form.prototype.getDateFromFieldId = function(t) {
+            var i = document.getElementById(t + "Y"),
+                r = document.getElementById(t + "M"),
+                a = document.getElementById(t + "D"),
+                n = i.options[i.selectedIndex].value,
+                o = r.selectedIndex,
+                s = a ? a.selectedIndex : 1,
+                2 === n.length && (n = "20" + n);
+                return new Date(n, o - 1, s)
+        },
+        
+        Formstack.Form.prototype.checkFormatNumber = function(e) {
         var t, i, r = e.value.replace(/[^\d\.\-]/g, ""),
             a = this.getNumberProperties(e),
             n = [],

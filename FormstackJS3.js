@@ -1493,7 +1493,26 @@ function(window, $) {
             && 
             $.inArray(""+o+"/"+s+"/"+n, l.split(";")) == -1
             //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
-        }, Formstack.Form.prototype.checkFormatUniqueDates = function (e) {
+        }, Formstack.Form.prototype.getDateFromFieldId = function (e) {
+            var i = document.getElementById("field" + e + "Y"),
+                r = document.getElementById("field" + e + "M"),
+                a = document.getElementById("field" + e + "D"),
+                n = i.options[i.selectedIndex].value,
+                o = r.selectedIndex,
+                s = a ? a.selectedIndex : 1,
+                r = !n && !o && a && !s,
+                t = !1;
+                if (2 === n.length){
+                    n = "20" + n
+                }                
+                if(!!(r && !i || t) || !(!n || !o || a && !s) ){
+                    return new Date(n, o - 1, s)
+                } 
+                return null
+        }
+        
+        
+        , Formstack.Form.prototype.checkFormatUniqueDates = function (e) {
 
             // get current date field id
             var t = e.id.slice(0, -1),
@@ -1540,22 +1559,6 @@ function(window, $) {
                 && 
                 $.inArray(new Date(n, o - 1, s), uniqueDates) == -1
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
-        }, Formstack.Form.prototype.getDateFromFieldId = function(e) {
-            var i = document.getElementById("field" + e + "Y"),
-                r = document.getElementById("field" + e + "M"),
-                a = document.getElementById("field" + e + "D"),
-                n = i.options[i.selectedIndex].value,
-                o = r.selectedIndex,
-                s = a ? a.selectedIndex : 1,
-                r = !n && !o && a && !s,
-                t = !1;
-                if (2 === n.length){
-                    n = "20" + n
-                }                
-                if(!!(r && !i || t) || !(!n || !o || a && !s) ){
-                    return new Date(n, o - 1, s)
-                } 
-                return null
         },
         
         Formstack.Form.prototype.checkFormatNumber = function(e) {

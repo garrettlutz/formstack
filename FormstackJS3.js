@@ -1493,26 +1493,28 @@ function(window, $) {
             && 
             $.inArray(""+o+"/"+s+"/"+n, l.split(";")) == -1
             //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
-        }, Formstack.Form.prototype.getDateFromFieldId = function (e) {
-            var i = document.getElementById("field" + e + "Y"),
-                r = document.getElementById("field" + e + "M"),
-                a = document.getElementById("field" + e + "D"),
-                n = i.options[i.selectedIndex].value,
-                o = r.selectedIndex,
-                s = a ? a.selectedIndex : 1,
-                r = !n && !o && a && !s,
-                t = !1;
-                if (2 === n.length){
-                    n = "20" + n
-                }                
-                if(!!(r && !i || t) || !(!n || !o || a && !s) ){
-                    return new Date(n, o - 1, s)
-                } 
-                return null
-        }
+        }, 
+        // Formstack.Form.prototype.getDateFromFieldId = function (e) {
+        //     var i = document.getElementById("field" + e + "Y"),
+        //         r = document.getElementById("field" + e + "M"),
+        //         a = document.getElementById("field" + e + "D"),
+        //         n = i.options[i.selectedIndex].value,
+        //         o = r.selectedIndex,
+        //         s = a ? a.selectedIndex : 1,
+        //         r = !n && !o && a && !s,
+        //         t = !1;
+        //         if (2 === n.length){
+        //             n = "20" + n
+        //         }                
+        //         if(!!(r && !i || t) || !(!n || !o || a && !s) ){
+        //             return new Date(n, o - 1, s)
+        //         } 
+        //         return null
+        // }
         
         
-        , Formstack.Form.prototype.checkFormatUniqueDates = function (e) {
+        // , 
+        Formstack.Form.prototype.checkFormatUniqueDates = function (e) {
 
             // get current date field id
             var t = e.id.slice(0, -1),
@@ -1539,7 +1541,27 @@ function(window, $) {
                 uniqueDateFieldsArray.forEach(function(x){
                     var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
                     
-                    var theDate = this.getDateFromFieldId(fieldId);
+                    var theDate;
+                    // = this.getDateFromFieldId(fieldId);
+
+                    var j = document.getElementById("field" + fieldId + "Y"),
+                    p = document.getElementById("field" + fieldId + "M"),
+                    k = document.getElementById("field" + fieldId + "D"),
+                    h = j.options[j.selectedIndex].value,
+                    q = p.selectedIndex,
+                    v = k ? k.selectedIndex : 1,
+                    p = !h && !q && k && !v,
+                    t = !1;
+                    if (2 === h.length){
+                        h = "20" + h
+                    }
+                    
+                    if(!!(p && !j || t) || !(!h || !q || k && !v) ){
+                        theDate = new Date(h, q - 1, v)
+                    } else {
+
+                        theDate = null
+                    } 
                     if (theDate){
                         uniqueDates.push(theDate);
                     }                    

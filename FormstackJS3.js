@@ -1540,10 +1540,10 @@ function(window, $) {
                 && 
                 $.inArray(new Date(n, o - 1, s), uniqueDates) == -1
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
-        }, Formstack.Form.prototype.getDateFromFieldId = function(t) {
-            var i = document.getElementById("field" + t + "Y"),
-                r = document.getElementById("field" + t + "M"),
-                a = document.getElementById("field" + t + "D"),
+        }, Formstack.Form.prototype.getDateFromFieldId = function(e) {
+            var i = document.getElementById("field" + e + "Y"),
+                r = document.getElementById("field" + e + "M"),
+                a = document.getElementById("field" + e + "D"),
                 n = i.options[i.selectedIndex].value,
                 o = r.selectedIndex,
                 s = a ? a.selectedIndex : 1,

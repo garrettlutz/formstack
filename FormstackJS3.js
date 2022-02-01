@@ -1579,7 +1579,7 @@ function(window, $) {
                 
                 !!(r && !i || t) || !(!n || !o || a && !s) 
                 && 
-                $.inArray(new Date(n, o - 1, s), uniqueDates) == -1
+                $.inArray(new Date(n, o - 1, s), uniqueDates) > -1
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
         },
         

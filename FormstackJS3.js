@@ -1506,7 +1506,6 @@ function(window, $) {
             uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='UniqueDateFields'] textarea").value.split(";"),
             currentFieldName = this.getContainer(e, "fsCell").getAttribute("fs-field-validation-name"),
             
-            
             fieldNameIndex = uniqueDateFieldsArray.indexOf(currentFieldName),
             //l = document.getElementById(t + "MinDate").value,
             i = -1 < e.className.indexOf("fsRequired"),
@@ -1519,7 +1518,7 @@ function(window, $) {
                 uniqueDateFieldsArray.splice(fieldNameIndex, 1);
 
                 uniqueDateFieldsArray.forEach(function(x){
-                    var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id;
+                    var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/);
                     
                     uniqueDates.push(this.getDateFromFieldId(fieldId));
                     
@@ -1527,8 +1526,6 @@ function(window, $) {
 
             }
                 
-                 
-
             return (-1 < this.getFieldContainer(e).className.indexOf("fsHidden") || $(e).closest(".fsSection").hasClass("fsHidden")) 
                 && (t = !0)
                 , 
@@ -1542,9 +1539,9 @@ function(window, $) {
                 $.inArray(new Date(n, o - 1, s), uniqueDates) == -1
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
         }, Formstack.Form.prototype.getDateFromFieldId = function(t) {
-            var i = document.getElementById(t + "Y"),
-                r = document.getElementById(t + "M"),
-                a = document.getElementById(t + "D"),
+            var i = document.getElementById("field" + t + "Y"),
+                r = document.getElementById("field" + t + "M"),
+                a = document.getElementById("field" + t + "D"),
                 n = i.options[i.selectedIndex].value,
                 o = r.selectedIndex,
                 s = a ? a.selectedIndex : 1;

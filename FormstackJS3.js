@@ -1550,12 +1550,12 @@ function(window, $) {
                 r = !n && !o && a && !s,
                 t = !1;
                 if (2 === n.length){
-                    n = "20" + n;
+                    n = "20" + n
                 }                
                 if(!!(r && !i || t) || !(!n || !o || a && !s) ){
                     return new Date(n, o - 1, s)
                 } 
-                return null;
+                return null
         },
         
         Formstack.Form.prototype.checkFormatNumber = function(e) {

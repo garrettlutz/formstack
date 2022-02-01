@@ -1518,7 +1518,7 @@ function(window, $) {
                 uniqueDateFieldsArray.splice(fieldNameIndex, 1);
 
                 uniqueDateFieldsArray.forEach(function(x){
-                    var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/);
+                    var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
                     
                     uniqueDates.push(this.getDateFromFieldId(fieldId));
                     

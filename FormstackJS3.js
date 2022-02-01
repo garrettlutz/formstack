@@ -1557,7 +1557,7 @@ function(window, $) {
                     }
                     
                     if(!!(p && !j || t) || !(!h || !q || k && !v) ){
-                        theDate = new Date(h, q - 1, v)
+                        theDate = new Date(h, q - 1, v).getTime(0)
                     } else {
 
                         theDate = null
@@ -1579,7 +1579,7 @@ function(window, $) {
                 
                 !!(r && !i || t) || !(!n || !o || a && !s) 
                 && 
-                $.inArray(new Date(n, o - 1, s), uniqueDates) == -1
+                $.inArray(new Date(n, o - 1, s).getTime(), uniqueDates) == -1
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
         },
         

@@ -287,6 +287,11 @@ function(window, $) {
                 onSelect: this.calendarSelect,
                 showOn: "both",
                 dateFormat: a,
+                beforeShowDay: function(e) {
+
+                    var whatIllReturn = disabledDates.indexOf(dateString) == -1;
+                    return [ whatIllReturn, "" ];
+                },
                 buttonText: "Select Date"
             }), $("#field" + r + "M").change(function() {
                 var e = $(this).attr("id").replace(/\D/g, ""),
@@ -1557,7 +1562,7 @@ function(window, $) {
                     }
                     
                     if(!!(p && !j || t) || !(!h || !q || k && !v) ){
-                        theDate = new Date(h, q - 1, v).getTime(0)
+                        theDate = new Date(h, q - 1, v).getTime()
                     } else {
 
                         theDate = null
@@ -1581,6 +1586,49 @@ function(window, $) {
                 && 
                 $.inArray(new Date(n, o - 1, s).getTime(), uniqueDates) == -1
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
+        },
+
+        Formstack.Form.prototype.checkDisabledDates = function(e) {
+
+            var l = document.querySelector("div[fs-field-validation-name='BlackOutDates'] textarea").value.split(";"),
+            uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='UniqueDateFields'] textarea").value.split(";"),
+            disableDates = [];
+            l.forEach(function(e) {
+                disableDates.push(new Date(e).getTime());
+            });
+            uniqueDateFieldsArray.forEach(function(x){
+                var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
+                
+                var theDate = new Date();
+                // = this.getDateFromFieldId(fieldId);
+
+                var j = document.getElementById("field" + fieldId + "Y"),
+                p = document.getElementById("field" + fieldId + "M"),
+                k = document.getElementById("field" + fieldId + "D"),
+                h = j.options[j.selectedIndex].value,
+                q = p.selectedIndex,
+                v = k ? k.selectedIndex : 1,
+                p = !h && !q && k && !v,
+                t = !1;
+                if (2 === h.length){
+                    h = "20" + h
+                }
+                
+                if(!!(p && !j || t) || !(!h || !q || k && !v) ){
+                    theDate = new Date(h, q - 1, v).getTime()
+                } else {
+
+                    theDate = null
+                } 
+                if (theDate){
+                    disableDates.push(theDate);
+                }                    
+            });
+            
+
+            //var dateString = $.datepicker.formatDate('m/d/yy', myDate);
+            return [disabledDates.indexOf(e.getTime()) == -1, ""];
+                    
         },
         
         Formstack.Form.prototype.checkFormatNumber = function(e) {

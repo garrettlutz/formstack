@@ -1504,7 +1504,7 @@ function(window, $) {
                 // monthVal = monthField.selectedIndex,
                 // dayVal = dayField ? dayField.selectedIndex : 1,
                 uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='UniqueDateFields'] textarea").value.split(";"),
-                currentFieldName = this.getContainer(e, "fsCell").getAttribute("fs-field-validation-name");
+                currentFieldName = this.getContainer(e, "fsCell").getAttribute("fs-field-validation-name"),
                 currentFieldDate = this.getDateFromFieldId(t),
                 
                 fieldNameIndex = uniqueDateFieldsArray.indexOf(currentFieldName),

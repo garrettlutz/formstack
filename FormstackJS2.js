@@ -1510,7 +1510,7 @@ function(window, $) {
                 fieldNameIndex = uniqueDateFieldsArray.indexOf(currentFieldName),
                 //l = document.getElementById(t + "MinDate").value,
                 i = -1 < e.className.indexOf("fsRequired"),
-                r = !n && !o && a && !s,
+                
                 uniqueDates = [],
                 t = !1;
 

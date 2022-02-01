@@ -1545,8 +1545,10 @@ function(window, $) {
                 a = document.getElementById(t + "D"),
                 n = i.options[i.selectedIndex].value,
                 o = r.selectedIndex,
-                s = a ? a.selectedIndex : 1,
-                2 === n.length && (n = "20" + n);
+                s = a ? a.selectedIndex : 1;
+                if (2 === n.length){
+                    n = "20" + n;
+                }
                 return new Date(n, o - 1, s)
         },
         

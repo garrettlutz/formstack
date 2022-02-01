@@ -1520,8 +1520,10 @@ function(window, $) {
                 uniqueDateFieldsArray.forEach(function(x){
                     var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
                     
-                    uniqueDates.push(this.getDateFromFieldId(fieldId));
-                    
+                    var theDate = this.getDateFromFieldId(fieldId);
+                    if (theDate){
+                        uniqueDates.push(theDate);
+                    }                    
                 });
 
             }
@@ -1544,11 +1546,16 @@ function(window, $) {
                 a = document.getElementById("field" + t + "D"),
                 n = i.options[i.selectedIndex].value,
                 o = r.selectedIndex,
-                s = a ? a.selectedIndex : 1;
+                s = a ? a.selectedIndex : 1,
+                r = !n && !o && a && !s,
+                t = !1;
                 if (2 === n.length){
                     n = "20" + n;
-                }
-                return new Date(n, o - 1, s)
+                }                
+                if(!!(r && !i || t) || !(!n || !o || a && !s) ){
+                    return new Date(n, o - 1, s)
+                } 
+                return null;
         },
         
         Formstack.Form.prototype.checkFormatNumber = function(e) {

@@ -1541,7 +1541,7 @@ function(window, $) {
                 uniqueDateFieldsArray.forEach(function(x){
                     var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
                     
-                    var theDate;
+                    var theDate = new Date();
                     // = this.getDateFromFieldId(fieldId);
 
                     var j = document.getElementById("field" + fieldId + "Y"),
@@ -1579,7 +1579,7 @@ function(window, $) {
                 
                 !!(r && !i || t) || !(!n || !o || a && !s) 
                 && 
-                $.inArray(new Date(n, o - 1, s), uniqueDates) > -1
+                $.inArray(new Date(n, o - 1, s), uniqueDates) == -1
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
         },
         

@@ -154,7 +154,7 @@ function(window, $) {
         }, this)),
         $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
             $("div[fs-field-validation-name='" + e + "']").bind("change", $.proxy(function(e) {
-                this.updateConsecutiveDate(e.target)
+                this.updateConsecutiveDate(e)
             }, this))
         })
         , $(".fsCheckAllOption").bind("change", $.proxy(function(e) {
@@ -1379,11 +1379,14 @@ function(window, $) {
             success: this.onValidationResult.bind(this)
         }), !0
     }, Formstack.Form.prototype.updateConsecutiveDate = function(e) {
-        var i = e.id.match(/(\d+)/)[1],
-         mydate = this.getDateFieldTimestamp("field" + i);
-         mydate.setDate(mydate.getDate() + 1);
+        var i = "object" == typeof e && "target" in e ? e.target : e
+        if (i){
+            var i = e.target.id.match(/(\d+)/)[1],
+            mydate = this.getDateFieldTimestamp("field" + i);
+            mydate.setDate(mydate.getDate() + 1);
 
-        $("div[fs-field-validation-name='" + e.attr("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
+            $("div[fs-field-validation-name='" + e.attr("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
+        }        
     }, Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;
         e && e.success && e.field && ((i = $("#field" + e.field)) && i.length && (t = i[0], (i = this.getFieldContainer(t)) && ($(i).removeClass("fsFieldValidating"), e.valid || this.highlightField(t, !0))))

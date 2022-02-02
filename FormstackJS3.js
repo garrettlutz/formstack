@@ -1385,8 +1385,9 @@ function(window, $) {
             mydate = this.getDateFieldTimestamp("field" + i);
             mydate.setDate(mydate.getDate() + 1);
 
-            $("div[fs-field-validation-name='" + e.attr("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
+            return void $("div[fs-field-validation-name='" + e.attr("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
         }        
+        return void 0;
     }, Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;
         e && e.success && e.field && ((i = $("#field" + e.field)) && i.length && (t = i[0], (i = this.getFieldContainer(t)) && ($(i).removeClass("fsFieldValidating"), e.valid || this.highlightField(t, !0))))

@@ -1588,7 +1588,7 @@ function(window, $) {
 
             var l = document.querySelector("div[fs-field-validation-name='BlackOutDates'] textarea").value.split(";"),
             uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='UniqueDateFields'] textarea").value.split(";"),
-            disableDates = [];
+            disabledDates = [];
             l.forEach(function(e) {
                 disabledDates.push(new Date(e).getTime());
             });

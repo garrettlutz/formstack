@@ -1595,7 +1595,7 @@ function(window, $) {
             uniqueDateFieldsArray.forEach(function(x){
                 var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1],
                 consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)']"),
-                consecutiveDateFieldId = consecutiveDateField.id.match(/(\d+)/)[1],
+                consecutiveDateFieldId,
                 theDate = new Date(),
                 consecutiveDate;
                 // = this.getDateFromFieldId(fieldId);
@@ -1620,8 +1620,11 @@ function(window, $) {
                 if (theDate){
                     disabledDates.push(theDate);
                 }     
-                
-                if (-1 < consecutiveDateField.className.indexOf("fsHidden")){
+                if(consecutiveDateField){
+
+                    consecutiveDateFieldId = consecutiveDateField.id.match(/(\d+)/)[1]
+                }
+                if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
                     var jj = document.getElementById("field" + consecutiveDateFieldId + "Y"),
                     pp = document.getElementById("field" + consecutiveDateFieldId + "M"),
                     kk = document.getElementById("field" + consecutiveDateFieldId + "D"),

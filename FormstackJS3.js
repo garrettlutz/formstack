@@ -1593,13 +1593,15 @@ function(window, $) {
                 disabledDates.push(new Date(e).getTime());
             });
             uniqueDateFieldsArray.forEach(function(x){
-                var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
-                
-                var theDate = new Date();
+                var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1],
+                consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)']"),
+                consecutiveDateFieldId = consecutiveDateField.id.match(/(\d+)/)[1],
+                theDate = new Date(),
+                consecutiveDate;
                 // = this.getDateFromFieldId(fieldId);
 
-                var j = document.getElementById("field" + fieldId + "Y"),
-                p = document.getElementById("field" + fieldId + "M"),
+                var j = document.getElementById("field" + fieldId + "Y"),                
+                p = document.getElementById("field" + fieldId + "M"),                
                 k = document.getElementById("field" + fieldId + "D"),
                 h = j.options[j.selectedIndex].value,
                 q = p.selectedIndex,
@@ -1608,8 +1610,7 @@ function(window, $) {
                 t = !1;
                 if (2 === h.length){
                     h = "20" + h
-                }
-                
+                }                
                 if(!!(p && !j || t) || !(!h || !q || k && !v) ){
                     theDate = new Date(h, q - 1, v).getTime()
                 } else {
@@ -1618,7 +1619,33 @@ function(window, $) {
                 } 
                 if (theDate){
                     disabledDates.push(theDate);
-                }                    
+                }     
+                
+                if (-1 < consecutiveDateField.className.indexOf("fsHidden")){
+                    var jj = document.getElementById("field" + consecutiveDateFieldId + "Y"),
+                    pp = document.getElementById("field" + consecutiveDateFieldId + "M"),
+                    kk = document.getElementById("field" + consecutiveDateFieldId + "D"),
+                    hh = jj.options[jj.selectedIndex].value,
+                    qq = pp.selectedIndex,
+                    vv = kk ? kk.selectedIndex : 1,
+                    pp = !hh && !qq && kk && !vv,
+                    tt = !1;
+                    if (2 === hh.length){
+                        hh = "20" + hh
+                    }
+                    if(!!(pp && !jj || tt) || !(!hh || !qq || kk && !vv) ){
+                        consecutiveDate = new Date(hh, qq - 1, vv).getTime()
+                    } else {
+
+                        consecutiveDate = null
+                    } 
+                    if (consecutiveDate){
+                        disabledDates.push(consecutiveDate);
+                    }     
+                }
+                
+
+
             });
             
 

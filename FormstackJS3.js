@@ -287,11 +287,7 @@ function(window, $) {
                 onSelect: this.calendarSelect,
                 showOn: "both",
                 dateFormat: a,
-                beforeShowDay: function(e) {
-
-                    var whatIllReturn = disabledDates.indexOf(dateString) == -1;
-                    return [ whatIllReturn, "" ];
-                },
+                beforeShowDay: this.checkDisabledDates,
                 buttonText: "Select Date"
             }), $("#field" + r + "M").change(function() {
                 var e = $(this).attr("id").replace(/\D/g, ""),

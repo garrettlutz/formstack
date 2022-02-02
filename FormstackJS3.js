@@ -154,7 +154,7 @@ function(window, $) {
         }, this)),
         $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
             $("div[fs-field-validation-name='" + e + "']").bind("change", $.proxy(function(e) {
-                this.updateConsecutiveDate(e)
+                this.updateConsecutiveDate(e, !0)
             }, this))
         })
         , $(".fsCheckAllOption").bind("change", $.proxy(function(e) {
@@ -1378,7 +1378,7 @@ function(window, $) {
             },
             success: this.onValidationResult.bind(this)
         }), !0
-    }, Formstack.Form.prototype.updateConsecutiveDate = function(e) {
+    }, Formstack.Form.prototype.updateConsecutiveDate = function(e, t) {
         var i = "object" == typeof e && "target" in e ? e.target : e
         if (i){
             var i = e.target.id.match(/(\d+)/)[1],

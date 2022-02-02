@@ -153,8 +153,9 @@ function(window, $) {
             this.checkFormat(e.target, !0)
         }, this)),
         $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
+            var fs = this;
             $("div[fs-field-validation-name='" + e + "']").bind("change", $.proxy(function(e) {
-                this.updateConsecutiveDate(e, !0)
+                fs.updateConsecutiveDate(e, !0)
             }, this))
         })
         , $(".fsCheckAllOption").bind("change", $.proxy(function(e) {

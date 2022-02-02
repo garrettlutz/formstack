@@ -151,8 +151,12 @@ function(window, $) {
         
         $(".fsField").bind("change", $.proxy(function(e) {
             this.checkFormat(e.target, !0)
-        }, this))
-        
+        }, this)),
+        $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
+            $("div[fs-field-validation-name='" + e + "']").bind("change", $.proxy(function(e) {
+                this.updateConsecutiveDate(e.target)
+            }, this))
+        })
         , $(".fsCheckAllOption").bind("change", $.proxy(function(e) {
             Formstack.Util.checkAll(e)
         }, this)), $(".fsField.fsFormatNumber.fsRequired").bind("blur", $.proxy(function(e) {
@@ -1374,6 +1378,12 @@ function(window, $) {
             },
             success: this.onValidationResult.bind(this)
         }), !0
+    }, Formstack.Form.prototype.updateConsecutiveDate = function(e) {
+        var i = e.id.match(/(\d+)/)[1],
+         mydate = this.getDateFieldTimestamp("field" + i);
+         mydate.setDate(mydate.getDate() + 1);
+
+        $("div[fs-field-validation-name='" + e.attr("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
     }, Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;
         e && e.success && e.field && ((i = $("#field" + e.field)) && i.length && (t = i[0], (i = this.getFieldContainer(t)) && ($(i).removeClass("fsFieldValidating"), e.valid || this.highlightField(t, !0))))
@@ -1594,8 +1604,7 @@ function(window, $) {
             });
             uniqueDateFieldsArray.forEach(function(x){
                 var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1],
-                consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)']"),
-                consecutiveDateFieldId,
+                consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),                
                 theDate = new Date(),
                 consecutiveDate;
                 // = this.getDateFromFieldId(fieldId);
@@ -1620,26 +1629,12 @@ function(window, $) {
                 if (theDate){
                     disabledDates.push(theDate);
                 }     
-                if(consecutiveDateField){
-
-                    consecutiveDateFieldId = consecutiveDateField.id.match(/(\d+)/)[1]
-                }
+                
                 if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
-                    var jj = document.getElementById("field" + consecutiveDateFieldId + "Y"),
-                    pp = document.getElementById("field" + consecutiveDateFieldId + "M"),
-                    kk = document.getElementById("field" + consecutiveDateFieldId + "D"),
-                    hh = jj.options[jj.selectedIndex].value,
-                    qq = pp.selectedIndex,
-                    vv = kk ? kk.selectedIndex : 1,
-                    pp = !hh && !qq && kk && !vv,
-                    tt = !1;
-                    if (2 === hh.length){
-                        hh = "20" + hh
-                    }
-                    if(!!(pp && !jj || tt) || !(!hh || !qq || kk && !vv) ){
-                        consecutiveDate = new Date(hh, qq - 1, vv).getTime()
+                    
+                    if (consecutiveDateField.val){
+                        consecutiveDate = new Date(consecutiveDateField.val).getTime()
                     } else {
-
                         consecutiveDate = null
                     } 
                     if (consecutiveDate){
@@ -1647,11 +1642,7 @@ function(window, $) {
                     }     
                 }
                 
-
-
             });
-            
-
             //var dateString = $.datepicker.formatDate('m/d/yy', myDate);
             return [disabledDates.indexOf(e.getTime()) == -1, ""];
                     

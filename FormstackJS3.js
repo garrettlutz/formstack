@@ -1590,7 +1590,7 @@ function(window, $) {
             uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='UniqueDateFields'] textarea").value.split(";"),
             disableDates = [];
             l.forEach(function(e) {
-                disableDates.push(new Date(e).getTime());
+                disabledDates.push(new Date(e).getTime());
             });
             uniqueDateFieldsArray.forEach(function(x){
                 var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
@@ -1617,7 +1617,7 @@ function(window, $) {
                     theDate = null
                 } 
                 if (theDate){
-                    disableDates.push(theDate);
+                    disabledDates.push(theDate);
                 }                    
             });
             

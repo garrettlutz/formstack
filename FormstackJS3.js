@@ -1619,7 +1619,7 @@ function(window, $) {
                     }     
                 }
             });
-            return [disabledDates.indexOf(e.getTime()) == -1, ""];
+            return [consecutiveDates.indexOf(e.getTime()) == -1, ""];
         },
 
         Formstack.Form.prototype.checkDisabledDates = function(e) {

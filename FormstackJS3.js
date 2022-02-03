@@ -1383,10 +1383,11 @@ function(window, $) {
         var i = "object" == typeof e && "target" in e ? e.target : e
         if (i){
             var i = e.target.id.match(/(\d+)/)[1],
-            mydate = this.getDateFieldTimestamp("field" + i);
+            mydate = this.getDateFieldTimestamp("field" + i),
+            field = this.getFieldContainer(e.target);
             mydate.setDate(mydate.getDate() + 1);
 
-            $("div[fs-field-validation-name='" + e.attr("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
+            $("div[fs-field-validation-name='" + field.attr("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
         }        
     }, Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;

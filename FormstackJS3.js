@@ -1614,15 +1614,16 @@ function(window, $) {
             r = !n && !o && a && !s,
             t = !1;
             if (!!(r && !i || t) || !(!n || !o || a && !s)) {
-                
+
                 consecutiveDateFieldsArray.forEach(function(x){
-                    var consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),     
+                    var consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)']"),
+                    consecutiveDateFieldValue = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),  
                     consecutiveDate;
                     
                     if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
                         
-                        if (consecutiveDateField.value){
-                            consecutiveDate = new Date(consecutiveDateField.value).getTime()
+                        if (consecutiveDateFieldValue && consecutiveDateFieldValue.value){
+                            consecutiveDate = new Date(consecutiveDateFieldValue.value).getTime()
                         } else {
                             consecutiveDate = null
                         } 
@@ -1655,7 +1656,8 @@ function(window, $) {
             });
             uniqueDateFieldsArray.forEach(function(x){
                 var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1],
-                consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),                
+                consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)']"),     
+                consecutiveDateFieldValue = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),             
                 theDate = new Date(),
                 consecutiveDate;
                 // = this.getDateFromFieldId(fieldId);
@@ -1683,8 +1685,8 @@ function(window, $) {
                 
                 if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
                     
-                    if (consecutiveDateField.value){
-                        consecutiveDate = new Date(consecutiveDateField.value).getTime()
+                    if (consecutiveDateFieldValue && consecutiveDateFieldValue.value){
+                        consecutiveDate = new Date(consecutiveDateFieldValue.value).getTime()
                     } else {
                         consecutiveDate = null
                     } 

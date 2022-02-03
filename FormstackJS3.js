@@ -1637,8 +1637,8 @@ function(window, $) {
                 
                 if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
                     
-                    if (consecutiveDateField.val()){
-                        consecutiveDate = new Date(consecutiveDateField.val()).getTime()
+                    if (consecutiveDateField.value){
+                        consecutiveDate = new Date(consecutiveDateField.value).getTime()
                     } else {
                         consecutiveDate = null
                     } 

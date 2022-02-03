@@ -1578,9 +1578,9 @@ function(window, $) {
                     var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
                     
                     if (state){
-                        
-                        $("#field" + fieldId + "Y").trigger("change", [!0, !1]);           
-                        
+                        if(this.getDateFieldTimestamp("field" + fieldId)){
+                            $("#field" + fieldId + "Y").trigger("change", [!0, !1]);           
+                        }
                     }
 
 

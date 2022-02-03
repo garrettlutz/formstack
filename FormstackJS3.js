@@ -1400,9 +1400,13 @@ function(window, $) {
             var i = e.target.id.match(/(\d+)/)[1],
             mydate = this.getDateFieldTimestamp("field" + i),
             field = this.getFieldContainer(e.target);
-            mydate.setDate(mydate.getDate() + 1);
+            if (mydate){
+                
+                mydate.setDate(mydate.getDate() + 1);
+    
+                $("div[fs-field-validation-name='" + field.getAttribute("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
 
-            $("div[fs-field-validation-name='" + field.getAttribute("fs-field-validation-name") + " (Day 2)'] input").val(mydate.toLocaleDateString("en-US"));
+            }
         }        
     }, Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;

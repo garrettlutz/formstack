@@ -1599,6 +1599,29 @@ function(window, $) {
                 //new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
         },
 
+        Formstack.Form.prototype.checkFormatConsecutiveDates = function(e) {
+            var uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").value.split(";"),
+            consecutiveDates = [];
+
+            uniqueDateFieldsArray.forEach(function(x){
+                var consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),     
+                consecutiveDate;
+                
+                if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
+                    
+                    if (consecutiveDateField.value){
+                        consecutiveDate = new Date(consecutiveDateField.value).getTime()
+                    } else {
+                        consecutiveDate = null
+                    } 
+                    if (consecutiveDate){
+                        consecutiveDates.push(consecutiveDate);
+                    }     
+                }
+            });
+            return [disabledDates.indexOf(e.getTime()) == -1, ""];
+        },
+
         Formstack.Form.prototype.checkDisabledDates = function(e) {
 
             var l = document.querySelector("div[fs-field-validation-name='BlackOutDates'] textarea").value.split(";"),

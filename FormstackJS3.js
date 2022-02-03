@@ -1609,7 +1609,7 @@ function(window, $) {
                     if (theDate){
                         uniqueDates.push(theDate);
                     }                    
-                });
+                }, this);
 
             }
                 

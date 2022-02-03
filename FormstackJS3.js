@@ -1600,26 +1600,49 @@ function(window, $) {
         },
 
         Formstack.Form.prototype.checkFormatConsecutiveDates = function(e) {
-            var uniqueDateFieldsArray = document.querySelector("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").value.split(";"),
-            consecutiveDates = [];
 
-            uniqueDateFieldsArray.forEach(function(x){
-                var consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),     
-                consecutiveDate;
+            var t = e.id.slice(0, -1),
+            i = document.getElementById(t + "Y"),
+            r = document.getElementById(t + "M"),
+            a = document.getElementById(t + "D"),
+            n = i.options[i.selectedIndex].value,
+            o = r.selectedIndex,
+            s = a ? a.selectedIndex : 1,
+            consecutiveDateFieldsArray = document.querySelector("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").value.split(";"),            
+            consecutiveDates = [],
+            i = -1 < e.className.indexOf("fsRequired"),
+            r = !n && !o && a && !s,
+            t = !1;
+            if (!!(r && !i || t) || !(!n || !o || a && !s)) {
                 
-                if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
+                consecutiveDateFieldsArray.forEach(function(x){
+                    var consecutiveDateField = document.querySelector("div[fs-field-validation-name='" + x + " (Day 2)'] input"),     
+                    consecutiveDate;
                     
-                    if (consecutiveDateField.value){
-                        consecutiveDate = new Date(consecutiveDateField.value).getTime()
-                    } else {
-                        consecutiveDate = null
-                    } 
-                    if (consecutiveDate){
-                        consecutiveDates.push(consecutiveDate);
-                    }     
-                }
-            });
-            return [consecutiveDates.indexOf(e.getTime()) == -1, ""];
+                    if (consecutiveDateField && -1 == consecutiveDateField.className.indexOf("fsHidden")){
+                        
+                        if (consecutiveDateField.value){
+                            consecutiveDate = new Date(consecutiveDateField.value).getTime()
+                        } else {
+                            consecutiveDate = null
+                        } 
+                        if (consecutiveDate){
+                            consecutiveDates.push(consecutiveDate);
+                        }     
+                    }
+                });
+            }
+            return (-1 < this.getFieldContainer(e).className.indexOf("fsHidden") || $(e).closest(".fsSection").hasClass("fsHidden")) 
+                && (t = !0)
+                , 
+                //if year is 2 digit make it 4
+                2 === n.length && (n = "20" + n)
+                , 
+        
+                
+                !!(r && !i || t) || !(!n || !o || a && !s) 
+                && 
+                $.inArray(new Date(n, o - 1, s).getTime(), consecutiveDates) == -1
         },
 
         Formstack.Form.prototype.checkDisabledDates = function(e) {

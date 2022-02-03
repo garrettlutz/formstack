@@ -150,7 +150,7 @@ function(window, $) {
         }, this)), 
         $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
             //var fs = this;
-            var fieldId = $("div[fs-field-validation-name='" + e + "']").id.match(/(\d+)/)[1],
+            var fieldId = $("div[fs-field-validation-name='" + e + "']").get(0).id.match(/(\d+)/)[1],
             t = document.getElementById("field" + fieldId + "Y"),
             i = document.getElementById("field" + fieldId + "M"),
             r = document.getElementById("field" + fieldId + "D");

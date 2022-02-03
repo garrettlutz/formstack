@@ -1579,7 +1579,7 @@ function(window, $) {
                     
                     if (state){
                         
-                        $("#field" + fieldId + "Y").trigger("change", !0, !1);           
+                        $("#field" + fieldId + "Y").trigger("change", [!0, !1]);           
                         
                     }
 

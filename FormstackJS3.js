@@ -1545,7 +1545,7 @@ function(window, $) {
         
         
         // , 
-        Formstack.Form.prototype.checkFormatUniqueDates = function (e, t) {
+        Formstack.Form.prototype.checkFormatUniqueDates = function (e, state) {
 
             // get current date field id
             var t = e.id.slice(0, -1),
@@ -1571,7 +1571,7 @@ function(window, $) {
 
                 uniqueDateFieldsArray.forEach(function(x){
 
-                    if (t){
+                    if (state){
                         $("div[fs-field-validation-name='" + x + "']").trigger("change", !0, !1);
                     }
 

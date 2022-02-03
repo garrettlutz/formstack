@@ -170,8 +170,8 @@ function(window, $) {
 
         }, this)
         ,
-        $(".fsField").bind("change", $.proxy(function(e) {
-            this.checkFormat(e.target, !0)
+        $(".fsField").bind("change", $.proxy(function(e, state=!0, stateTwo=!0) {
+            this.checkFormat(e.target, state, stateTwo)
         }, this)),
          $(".fsCheckAllOption").bind("change", $.proxy(function(e) {
             Formstack.Util.checkAll(e)
@@ -1323,7 +1323,7 @@ function(window, $) {
         }
         for (var o, a = 0; a < i.length; a++) i[a] = i[a].toLowerCase();
         return i.indexOf("*") < 0 && e && "" !== e.value && !e.disabled && ((t = !!((o = e.value.match(/\.(\w+)$/)) && 0 <= i.indexOf(o[1].toLowerCase()))) || (this.highlightField(e, !0), e = document.getElementById("fileTypeAlert") ? $("#fileTypeAlert").text() : "You must upload one of the following file types for the selected field:", alert(e + i.join(", ")))), t
-    }, Formstack.Form.prototype.checkFormat = function(e, t) {
+    }, Formstack.Form.prototype.checkFormat = function(e, t, v) {
         var i = "object" == typeof e && "target" in e ? e.target : e,
             e = this.getFieldContainer(i);
         if (this.onChange = !1, void 0 !== t && (this.onChange = !0), this.fieldManagedByStripe(i)) return !0;
@@ -1335,7 +1335,7 @@ function(window, $) {
                     l = "check" + r[o].slice(2),
                     d = ["checkFormatPhone"];
                 if ("function" == typeof this[l]) {
-                    if (!(n = this[l](i))) break
+                    if (!(n = this[l](i, v))) break
                 } else {
                     for (var c = 0, u = d.length; c < u; c++)
                         if (0 === l.indexOf(d[c]) && "function" == typeof this[d[c]]) {
@@ -1545,7 +1545,7 @@ function(window, $) {
         
         
         // , 
-        Formstack.Form.prototype.checkFormatUniqueDates = function (e) {
+        Formstack.Form.prototype.checkFormatUniqueDates = function (e, t) {
 
             // get current date field id
             var t = e.id.slice(0, -1),
@@ -1570,6 +1570,12 @@ function(window, $) {
                 uniqueDateFieldsArray.splice(fieldNameIndex, 1);
 
                 uniqueDateFieldsArray.forEach(function(x){
+
+                    if (t){
+                        $("div[fs-field-validation-name='" + x + "']").trigger("change", !0, !1);
+                    }
+
+
                     var fieldId = document.querySelector("div[fs-field-validation-name='" + x + "']").id.match(/(\d+)/)[1];
                     
                     var theDate = new Date();

@@ -334,15 +334,15 @@ function(window, $) {
         $("#fsForm" + this.id + " .ui-datepicker-trigger").attr("aria-hidden", !0)
     }, Formstack.Form.prototype.determineMinDate = function(){
         var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
-        actualDate = myMinDate ? new Date(myMinDate) : null;
+        //actualDate = myMinDate ? new Date(myMinDate) : null;
         if (myMinDate){
-            if (!isNaN(actualDate)){
-                return actualDate;
-            }
-            else {
+            // if (!isNaN(actualDate)){
+            //     return actualDate;
+            // }
+            // else {
                 var parsedDate = this.parseDateString(myMinDate);
                 return parsedDate ? parsedDate : new Date();                
-            }
+            // }
         }
         else {
             return new Date();

@@ -333,22 +333,14 @@ function(window, $) {
         }
         $("#fsForm" + this.id + " .ui-datepicker-trigger").attr("aria-hidden", !0)
     }, Formstack.Form.prototype.determineMinDate = function(){
-        var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value;
-        //actualDate = myMinDate ? new Date(myMinDate) : null;
-        if (myMinDate){
-            // if (!isNaN(actualDate)){
-            //     return actualDate;
-            // }
-            // else {
-                var parsedDate = this.parseDateString(myMinDate);
-                return parsedDate ? parsedDate : new Date();                
-            // }
+        var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value;        
+        if (myMinDate){            
+            var parsedDate = this.parseDateString(myMinDate);
+            return parsedDate ? parsedDate : new Date();        
         }
         else {
             return new Date();
         }
-
-
     }, Formstack.Form.prototype.parseDateString = function(e) {
 
         const reg = new RegExp('(today|tomorrow|\\+|\\-|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:[0-9]{2})?|[0-9]+|\\s|\\S)','g');
@@ -381,7 +373,7 @@ function(window, $) {
                 }
             }
             else if(match[0].match('[0-9]+') != null){
-                dateExpression.push(match[0])
+                dateExpression.push(parseInt(match[0]))
             }
             else if(match[0].match('\\s+') != null){
                 continue;

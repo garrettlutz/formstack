@@ -335,12 +335,17 @@ function(window, $) {
     }, Formstack.Form.prototype.determineMinDate = function(){
         var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
         actualDate = myMinDate ? new Date(myMinDate) : null;
-        if (actualDate){
-            return actualDate;
+        if (myMinDate){
+            if (!isNaN(actualDate)){
+                return actualDate;
+            }
+            else {
+                var parsedDate = this.parseDateString(myMinDate);
+                return parsedDate ? parsedDate : new Date();                
+            }
         }
         else {
-            var parsedDate = this.parseDateString(actualDate);
-            return parsedDate ? parsedDate : new Date();                
+            return new Date();
         }
 
 
@@ -366,7 +371,14 @@ function(window, $) {
                 dateExpression.push('SUBTRACT')                
             }
             else if(match[0].match('[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:\d{2})?') != null){
-                dateExpression.push(new Date(match[0]));                
+                var customDate = new Date(match[0])
+                if (!isNaN(customDate)){
+                    dateExpression.push(customDate);
+                }
+                else {
+                    alert('Error: the minDate is invalid');
+                    return null;
+                }
             }
             else if(match[0].match('\d+') != null){
                 dateExpression.push(match[0])

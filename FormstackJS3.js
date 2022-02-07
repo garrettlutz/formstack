@@ -299,7 +299,8 @@ function(window, $) {
             if (!$.datepicker) return void l.css("display", "none");
             i = document.getElementById("field" + r + "MaxDate"), s = i ? new Date(i.value) : new Date(s, 11, 31);
             l.datepicker({
-                minDate: (myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value, myMinDate ? new Date(myMinDate) :  new Date(n, 0, 1)),
+                //minDate: (myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value, myMinDate ? new Date(myMinDate) :  new Date(n, 0, 1)),
+                minDate: this.determineMinDate,
                 maxDate: s,
                 buttonImage: $("#fsCalendar" + r + "ImageUrl").html(),
                 buttonImageOnly: !0,

@@ -300,7 +300,7 @@ function(window, $) {
             i = document.getElementById("field" + r + "MaxDate"), s = i ? new Date(i.value) : new Date(s, 11, 31);
             l.datepicker({
                 //minDate: (myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value, myMinDate ? new Date(myMinDate) :  new Date(n, 0, 1)),
-                minDate: this.determineMinDate,
+                minDate: this.determineMinDate(),
                 maxDate: s,
                 buttonImage: $("#fsCalendar" + r + "ImageUrl").html(),
                 buttonImageOnly: !0,
@@ -332,7 +332,7 @@ function(window, $) {
             })
         }
         $("#fsForm" + this.id + " .ui-datepicker-trigger").attr("aria-hidden", !0)
-    }, Formstack.Form.prototype.determineMinDate = function(e){
+    }, Formstack.Form.prototype.determineMinDate = function(){
         var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
         actualDate = myMinDate ? new Date(myMinDate) : null;
         if (actualDate){

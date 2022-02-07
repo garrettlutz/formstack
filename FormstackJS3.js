@@ -331,6 +331,121 @@ function(window, $) {
             })
         }
         $("#fsForm" + this.id + " .ui-datepicker-trigger").attr("aria-hidden", !0)
+    }, Formstack.Form.prototype.determineMinDate = function(){
+        var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
+        actualDate = myMinDate ? new Date(myMinDate) : null;
+        if (actualDate){
+            return actualDate;
+        }
+        else {
+            var parsedDate = this.parseDateString(actualDate);
+            return parsedDate ? parsedDate : new Date();                
+        }
+
+
+    }, Formstack.Form.prototype.parseDateString = function(e) {
+
+        const reg = new RegExp('(today|tomorrow|\+|\-|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:\d{2})?|[0-9]+|\s|\S)','g');
+        const matches = e.toLowerCase.matchAll(reg);
+        var dateExpression = [];
+        for (const match of matches) {
+            if (match[0].equals('today'))
+            {
+                dateExpression.push(new Date());                
+            }
+            else if(match[0].equals('tomorrow')){
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                dateExpression.push(tomorrow);                
+            }            
+            else if(match[0].equals('+')){
+                dateExpression.push('ADD');                
+            }
+            else if(match[0].equals('-')){
+                dateExpression.push('SUBTRACT')                
+            }
+            else if(match[0].match('[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:\d{2})?') != null){
+                dateExpression.push(new Date(match[0]));                
+            }
+            else if(match[0].match('\d+') != null){
+                dateExpression.push(match[0])
+            }
+            else if(match[0].match('\s+') != null){
+                continue;
+            }
+            else {
+                alert('Error: the minDate is invalid');
+                return null;
+            }            
+        }
+
+        
+        if (dateExpression.length > 0 && dateExpression[0] instanceof Date){
+            var startDate = dateExpression[0];
+            
+            if (dateExpression.length > 1 && 'string' == typeof dateExpression[1]){
+                if (dateExpression[1].equals('ADD')){
+                    if (dateExpression.length > 2 && 'number' == typeof dateExpression[2]){
+                        startDate.setDate(startDate.getDate() + dateExpression[2])
+                        return startDate;
+                    }
+                    else {
+                        alert('Error: the minDate is invalid');
+                        return null;
+                    }
+                } else 
+                {
+                    if (dateExpression.length > 2 && 'number' == typeof dateExpression[2]){
+                        startDate.setDate(startDate.getDate() - dateExpression[2])
+                        return startDate;
+                    }
+                    else {
+                        alert('Error: the minDate is invalid');
+                        return null;
+                    }
+                }
+            }
+            else {
+                alert('Error: the minDate is invalid');
+                return null;
+            }
+        } 
+        else if(dateExpression.length > 0 && 'number' == typeof dateExpression[0]){
+            var numberToAdd = dateExpression[0];
+
+            if (dateExpression.length > 1 && 'string' == typeof dateExpression[1]){
+                if (dateExpression[1].equals('ADD')){
+                    if (dateExpression.length > 2 && dateExpression[2] instanceof Date){
+                        var minDate = dateExpression[2];
+                        minDate.setDate(minDate.getDate() + numberToAdd)
+                        return minDate;
+                    }
+                    else {
+                        alert('Error: the minDate is invalid');
+                        return null;
+                    }
+                } else 
+                {
+                    if (dateExpression.length > 2 && dateExpression[2] instanceof Date){
+                        var minDate = dateExpression[2];
+                        minDate.setDate(minDate.getDate() - numberToAdd)
+                        return minDate;
+                    }
+                    else {
+                        alert('Error: the minDate is invalid');
+                        return null;
+                    }
+                }
+            }
+            else {
+                alert('Error: the minDate is invalid');
+                return null;
+            }
+        }
+        else {
+            return null
+        }
+
     }, Formstack.Form.prototype.initAutocompletes = function() {
         $(".fsAutocomplete").each($.proxy(function(e, t) {
             var i = t.id.match(/(\d+)/)[1],

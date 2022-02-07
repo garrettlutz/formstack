@@ -351,7 +351,7 @@ function(window, $) {
 
     }, Formstack.Form.prototype.parseDateString = function(e) {
 
-        const reg = new RegExp('(today|tomorrow|\+|\-|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:\d{2})?|[0-9]+|\s|\S)','g');
+        const reg = new RegExp('(today|tomorrow|\\+|\-|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:\d{2})?|[0-9]+|\s|\S)','g');
         const matches = e.toLowerCase.matchAll(reg);
         var dateExpression = [];
         for (const match of matches) {

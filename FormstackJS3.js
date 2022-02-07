@@ -355,19 +355,19 @@ function(window, $) {
         const matches = e.toLowerCase().matchAll(reg);
         var dateExpression = [];
         for (const match of matches) {
-            if (match[0].equals('today'))
+            if (match[0] == 'today')
             {
                 dateExpression.push(new Date());                
             }
-            else if(match[0].equals('tomorrow')){
+            else if(match[0] == 'tomorrow'){
                 var tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 dateExpression.push(tomorrow);                
             }            
-            else if(match[0].equals('+')){
+            else if(match[0] == '+'){
                 dateExpression.push('ADD');                
             }
-            else if(match[0].equals('-')){
+            else if(match[0] == '-'){
                 dateExpression.push('SUBTRACT')                
             }
             else if(match[0].match('[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:\d{2})?') != null){

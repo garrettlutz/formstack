@@ -332,7 +332,7 @@ function(window, $) {
             })
         }
         $("#fsForm" + this.id + " .ui-datepicker-trigger").attr("aria-hidden", !0)
-    }, Formstack.Form.prototype.determineMinDate = function(){
+    }, Formstack.Form.prototype.determineMinDate = function(e){
         var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
         actualDate = myMinDate ? new Date(myMinDate) : null;
         if (actualDate){

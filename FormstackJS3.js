@@ -336,11 +336,15 @@ function(window, $) {
         var myMinDate = document.querySelector("div[fs-field-validation-name='MinDate'] input").value;        
         if (myMinDate){            
             var parsedDate = this.parseDateString(myMinDate);
-            return parsedDate ? parsedDate : new Date();        
+            if (parsedDate){
+                return parsedDate;
+            }
         }
-        else {
-            return new Date();
-        }
+                
+        var today = new Date();
+        today.setHours(0,0,0,0);
+        return today;
+        
     }, Formstack.Form.prototype.parseDateString = function(e) {
 
         const reg = new RegExp('(today|tomorrow|\\+|\\-|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}(?:[0-9]{2})?|[0-9]+|\\s|\\S)','g');
@@ -349,10 +353,13 @@ function(window, $) {
         for (const match of matches) {
             if (match[0] == 'today')
             {
-                dateExpression.push(new Date());                
+                var today = new Date();
+                today.setHours(0,0,0,0);
+                dateExpression.push(today);                
             }
             else if(match[0] == 'tomorrow'){
                 var tomorrow = new Date();
+                tomorrow.setHours(0,0,0,0);
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 dateExpression.push(tomorrow);                
             }            

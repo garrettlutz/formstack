@@ -1614,7 +1614,7 @@ function(window, $) {
             n = i.options[i.selectedIndex].value,
             o = r.selectedIndex,
             s = a ? a.selectedIndex : 1,
-            l = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
+            //l = document.querySelector("div[fs-field-validation-name='MinDate'] input").value,
             //l = document.getElementById(t + "MinDate").value,
             i = -1 < e.className.indexOf("fsRequired"),
             r = !n && !o && a && !s,
@@ -1629,7 +1629,7 @@ function(window, $) {
             
             !!(r && !i || t) || !(!n || !o || a && !s) 
             && 
-            new Date(n, o - 1, s) >= new Date(l.replace(/-/g, "/"))
+            new Date(n, o - 1, s) >= this.determineMinDate()
         }, Formstack.Form.prototype.checkFormatBlackOutDates = function (e) {
         var t = e.id.slice(0, -1),
             i = document.getElementById(t + "Y"),

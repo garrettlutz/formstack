@@ -400,7 +400,7 @@ function(window, $) {
 
                 if('string' == typeof dateExpression[1]){
 
-                    if (dateExpression[1].equals('ADD')){
+                    if (dateExpression[1] == 'ADD'){
                         if (dateExpression.length > 2 && 'number' == typeof dateExpression[2]){
                             startDate.setDate(startDate.getDate() + dateExpression[2])
                             return startDate;
@@ -434,7 +434,7 @@ function(window, $) {
             var numberToAdd = dateExpression[0];
 
             if (dateExpression.length > 1 && 'string' == typeof dateExpression[1]){
-                if (dateExpression[1].equals('ADD')){
+                if (dateExpression[1] == 'ADD'){
                     if (dateExpression.length > 2 && dateExpression[2] instanceof Date){
                         var minDate = dateExpression[2];
                         minDate.setDate(minDate.getDate() + numberToAdd)

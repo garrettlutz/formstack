@@ -158,14 +158,17 @@ function(window, $) {
             t.bind("change", $.proxy(function(e) {
                 
                 this.updateConsecutiveDate(e, !0)
+                this.updateFormatedRequestedDates(e, !0)
             }, this));
             i.bind("change", $.proxy(function(e) {
                 
                 this.updateConsecutiveDate(e, !0)
+                this.updateFormatedRequestedDates(e, !0)
             }, this));
             r.bind("change", $.proxy(function(e) {
                 
                 this.updateConsecutiveDate(e, !0)
+                this.updateFormatedRequestedDates(e, !0)
             }, this));
 
         }, this)
@@ -340,7 +343,7 @@ function(window, $) {
                 return parsedDate;
             }
         }
-                
+
         var today = new Date();
         today.setHours(0,0,0,0);
         return today;
@@ -1542,6 +1545,54 @@ function(window, $) {
 
             }
         }        
+    }, Formstack.Form.prototype.updateFormatedRequestedDates = function(e, t){
+        var i = "object" == typeof e && "target" in e ? e.target : e
+        if (i){
+            //get hidden field
+            var hiddenFormattedRequestField = document.querySelector("div[fs-field-validation-name='FormattedRequestedDates'] input");
+            var uniqueDates = [], consecutiveDates = [];
+
+            $("div[fs-field-validation-name='UniqueDateFields'] textarea").val().split(";").forEach(function(e) {
+                var fieldId = $("div[fs-field-validation-name='" + e + "']").get(0).id.match(/(\d+)/)[1],
+                mydate = this.getDateFieldTimestamp("field" + fieldId),
+                if (mydate && !NaN(mydate)){
+                    uniqueDates.push(mydate.toLocaleDateString("en-US"));
+                }
+            }, this);
+
+            $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
+                
+                if (!$("div[fs-field-validation-name='" + e + " (Day 2)']").hasField("fsHidden")){
+                    var consecutiveDate = $("div[fs-field-validation-name='" + e + " (Day 2)'] input").val();
+                    if (consecutiveDate){
+                        consecutiveDates.push(consecutiveDate);
+                    }
+                }
+            }, this);
+
+            var date1, date2, date3;
+            date1 = typeof uniqueDates[0] === 'undefined' ? '' : uniqueDates[0];
+            date2 = typeof uniqueDates[1] === 'undefined' ? '' : uniqueDates[1];
+            date3 = typeof uniqueDates[2] === 'undefined' ? '' : uniqueDates[2];
+
+            if (consecutiveDate.length > 2){
+                var consecDate1, consecDate2, consecDate3;
+                consecDate1 = typeof consecutiveDates[0] === 'undefined' ? '' : consecutiveDates[0];
+                consecDate2 = typeof consecutiveDates[1] === 'undefined' ? '' : consecutiveDates[1];
+                consecDate3 = typeof consecutiveDates[2] === 'undefined' ? '' : consecutiveDates[2];
+
+                hiddenFormattedRequestField.value(`${date1} & ${consecDate1}, ${date2} & ${consecDate2} or ${date3} & ${consecDate3}`)
+
+            }
+            else{
+
+                hiddenFormattedRequestField.value(`${date1}, ${date2} or ${date3}`);
+            }
+            
+
+        }        
+
+
     }, Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;
         e && e.success && e.field && ((i = $("#field" + e.field)) && i.length && (t = i[0], (i = this.getFieldContainer(t)) && ($(i).removeClass("fsFieldValidating"), e.valid || this.highlightField(t, !0))))

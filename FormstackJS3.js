@@ -145,6 +145,12 @@ function(window, $) {
             for (var i = this.dateCalcFields[e].match(/(\d+)/)[1], r = this.getFields(i, !0), a = 0, n = r.length; a < n; a++) $(r[a]).bind("change", $.proxy(this.updateDateCalculations, this));
         for (e = 0; e < this.dateCalculations.length; e++) this.evalDateCalculation(this.dateCalculations[e])
     }, Formstack.Form.prototype.initFields = function() {
+        this.setMinuteOptions(),
+        $("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select").forEach(function(e) {
+            e.bind("change", $.proxy(function(){
+                this.updateIdealTime();
+            }, this));
+        }, this),        
         $(".fsField.fsRequired").bind("change", $.proxy(function(e) {
             this.checkRequired(e.target, !0)
         }, this)), 
@@ -1588,10 +1594,34 @@ function(window, $) {
 
                 hiddenFormattedRequestField.value = `${date1}, ${date2} or ${date3}`;
             }
-            
+        }
+    }, Formstack.Form.prototype.updateIdealTime = function() {
+        var hiddenField = document.querySelector("div[fs-field-validation-name='Mapped Time'] input"),
+        hours = timeFields[0].value,
+        timeFields = document.querySelectorAll("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select");
+        
+        if (hours != null && hours != "" && hours.charAt(0) == '0'){
+            hours = hours.substring(1);
+        }
+        
+        var minutes = timeFields[1].value;
+        var ampm = timeFields[2].value;
+        
+        hiddenField.value = hours + ":" + minutes + " " + ampm;
+    }, Formstack.Form.prototype.setMinuteOptions = function() {
 
-        }        
+        var timeFields = document.querySelectorAll("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select");
+    
+        var options = timeFields[1].querySelectorAll('option');
 
+        options.forEach(function(option) {
+            if (option.value.value != ''){
+                
+                if (option.value != '' && option.value != '00' && option.value != '15' && option.value != '30' && option.value != '45' ){
+                    option.remove();
+                }
+            }
+        });
 
     }, Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;

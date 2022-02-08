@@ -1555,7 +1555,7 @@ function(window, $) {
             $("div[fs-field-validation-name='UniqueDateFields'] textarea").val().split(";").forEach(function(e) {
                 var fieldId = $("div[fs-field-validation-name='" + e + "']").get(0).id.match(/(\d+)/)[1],
                 mydate = this.getDateFieldTimestamp("field" + fieldId);
-                if (mydate && !NaN(mydate)){
+                if (mydate && !isNaN(mydate)){
                     uniqueDates.push(mydate.toLocaleDateString("en-US"));
                 }
             }, this);

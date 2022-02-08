@@ -145,19 +145,10 @@ function(window, $) {
             for (var i = this.dateCalcFields[e].match(/(\d+)/)[1], r = this.getFields(i, !0), a = 0, n = r.length; a < n; a++) $(r[a]).bind("change", $.proxy(this.updateDateCalculations, this));
         for (e = 0; e < this.dateCalculations.length; e++) this.evalDateCalculation(this.dateCalculations[e])
     }, Formstack.Form.prototype.initFields = function() {
-        this.setMinuteOptions();
-        var idealTimeField = $("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select"); 
-        
-        idealTimeField[0].bind("change", $.proxy(function(){
+        this.setMinuteOptions(),
+        $("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select").bind("change", $.proxy(function(){
             this.updateIdealTime();
-        }, this));
-        idealTimeField[1].bind("change", $.proxy(function(){
-            this.updateIdealTime();
-        }, this));
-        idealTimeField[2].bind("change", $.proxy(function(){
-            this.updateIdealTime();
-        }, this));
-        
+        }, this)),
         $(".fsField.fsRequired").bind("change", $.proxy(function(e) {
             this.checkRequired(e.target, !0)
         }, this)), 

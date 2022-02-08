@@ -1575,7 +1575,7 @@ function(window, $) {
             date2 = typeof uniqueDates[1] === 'undefined' ? '' : uniqueDates[1];
             date3 = typeof uniqueDates[2] === 'undefined' ? '' : uniqueDates[2];
 
-            if (consecutiveDate.length > 2){
+            if (consecutiveDates.length > 2){
                 var consecDate1, consecDate2, consecDate3;
                 consecDate1 = typeof consecutiveDates[0] === 'undefined' ? '' : consecutiveDates[0];
                 consecDate2 = typeof consecutiveDates[1] === 'undefined' ? '' : consecutiveDates[1];

@@ -1581,12 +1581,12 @@ function(window, $) {
                 consecDate2 = typeof consecutiveDates[1] === 'undefined' ? '' : consecutiveDates[1];
                 consecDate3 = typeof consecutiveDates[2] === 'undefined' ? '' : consecutiveDates[2];
 
-                hiddenFormattedRequestField.value(`${date1} & ${consecDate1}, ${date2} & ${consecDate2} or ${date3} & ${consecDate3}`)
+                hiddenFormattedRequestField.value = `${date1} & ${consecDate1}, ${date2} & ${consecDate2} or ${date3} & ${consecDate3}`;
 
             }
             else{
 
-                hiddenFormattedRequestField.value(`${date1}, ${date2} or ${date3}`);
+                hiddenFormattedRequestField.value = `${date1}, ${date2} or ${date3}`;
             }
             
 

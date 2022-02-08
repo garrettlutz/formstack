@@ -146,11 +146,11 @@ function(window, $) {
         for (e = 0; e < this.dateCalculations.length; e++) this.evalDateCalculation(this.dateCalculations[e])
     }, Formstack.Form.prototype.initFields = function() {
         this.setMinuteOptions(),
-        $("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select").forEach(function(e) {
+        $("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select").each(function(e) {
             e.bind("change", $.proxy(function(){
                 this.updateIdealTime();
             }, this));
-        }, this),        
+        }),        
         $(".fsField.fsRequired").bind("change", $.proxy(function(e) {
             this.checkRequired(e.target, !0)
         }, this)), 

@@ -1562,7 +1562,7 @@ function(window, $) {
 
             $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
                 
-                if (!$("div[fs-field-validation-name='" + e + " (Day 2)']").hasField("fsHidden")){
+                if (!$("div[fs-field-validation-name='" + e + " (Day 2)']").get(0).hasField("fsHidden")){
                     var consecutiveDate = $("div[fs-field-validation-name='" + e + " (Day 2)'] input").val();
                     if (consecutiveDate){
                         consecutiveDates.push(consecutiveDate);

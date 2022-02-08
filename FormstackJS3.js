@@ -1595,8 +1595,9 @@ function(window, $) {
         }
     }, Formstack.Form.prototype.updateIdealTime = function() {
         var hiddenField = document.querySelector("div[fs-field-validation-name='Mapped Time'] input"),
-        hours = timeFields[0].value,
-        timeFields = document.querySelectorAll("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select");
+        timeFields = document.querySelectorAll("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select"),
+        hours = timeFields[0].value;
+        
         
         if (hours != null && hours != "" && hours.charAt(0) == '0'){
             hours = hours.substring(1);

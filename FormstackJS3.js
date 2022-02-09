@@ -146,6 +146,7 @@ function(window, $) {
         for (e = 0; e < this.dateCalculations.length; e++) this.evalDateCalculation(this.dateCalculations[e])
     }, Formstack.Form.prototype.initFields = function() {
         this.setMinuteOptions(),
+        this.addDateWarnings(),
         $("div[fs-field-validation-name='Ideal Photo Shoot Start Time'] select").bind("change", $.proxy(function(){
             this.updateIdealTime();
         }, this)),
@@ -163,16 +164,19 @@ function(window, $) {
                 
                 this.updateConsecutiveDate(e, !0)
                 this.updateFormatedRequestedDates(e, !0)
+                this.toggleDateWarning();
             }, this));
             i.bind("change", $.proxy(function(e) {
                 
                 this.updateConsecutiveDate(e, !0)
                 this.updateFormatedRequestedDates(e, !0)
+                this.toggleDateWarning();
             }, this));
             r.bind("change", $.proxy(function(e) {
                 
                 this.updateConsecutiveDate(e, !0)
                 this.updateFormatedRequestedDates(e, !0)
+                this.toggleDateWarning();
             }, this));
 
         }, this)
@@ -1621,8 +1625,31 @@ function(window, $) {
                 }
             }
         });
+    }, Formstack.Form.prototype.addDateWarnings = function() {
+        $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
+            $("div[fs-field-validation-name='" + e + "']").append('<div class="InvalidDate fsHidden"><span>Please enter a valid date!</span></div>');
+        }, this);
+        
+    }, Formstack.Form.prototype.toggleDateWarning = function(){
+        $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
+            var field = $("div[fs-field-validation-name='" + e + "']");
+            var fieldDateWarning = $("div[fs-field-validation-name='" + e + "'] .InvalidDate");
+            if (field.hasClass("fsValidationError")){
 
-    }, Formstack.Form.prototype.onValidationResult = function(e) {
+                var fieldID = field.get(0).id.match(/(\d+)/)[1];
+    
+                var mydate = this.getDateFieldTimestamp("field" + fieldId);
+                if (mydate && !isNaN(mydate)){
+                    fieldDateWarning.removeClass("fsHidden")
+                }                
+            }
+            else if(!fieldDateWarning.hasClass("fsHidden")){
+                fieldDateWarning.addClass("fsHidden");
+            }
+        }, this);
+    },
+    
+    Formstack.Form.prototype.onValidationResult = function(e) {
         var t, i;
         e && e.success && e.field && ((i = $("#field" + e.field)) && i.length && (t = i[0], (i = this.getFieldContainer(t)) && ($(i).removeClass("fsFieldValidating"), e.valid || this.highlightField(t, !0))))
     }, Formstack.Form.prototype.getPhoneParts = function(e, t) {

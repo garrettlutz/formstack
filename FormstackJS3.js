@@ -1653,7 +1653,7 @@ function(window, $) {
             var fieldDateWarning = $("div[fs-field-validation-name='" + e + "'] .InvalidDate");
             if (field.hasClass("fsValidationError")){
 
-                var fieldID = field.get(0).id.match(/(\d+)/)[1];
+                var fieldId = field.get(0).id.match(/(\d+)/)[1];
     
                 var mydate = this.getDateFieldTimestamp("field" + fieldId);
                 if (mydate && !isNaN(mydate)){

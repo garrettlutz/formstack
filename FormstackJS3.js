@@ -1627,7 +1627,7 @@ function(window, $) {
         });
     }, Formstack.Form.prototype.addDateWarnings = function() {
         $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
-            $("div[fs-field-validation-name='" + e + "']").append('<div class="InvalidDate fsHidden"><span>Please enter a valid date!</span></div>');
+            $("div[fs-field-validation-name='" + e + "']").prepend('<div class="InvalidDate fsHidden"><span>Please enter a valid date!</span></div>');
         }, this);
         
     }, Formstack.Form.prototype.toggleDateWarning = function(){

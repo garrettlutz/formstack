@@ -164,19 +164,16 @@ function(window, $) {
                 
                 this.updateConsecutiveDate(e, !0)
                 this.updateFormatedRequestedDates(e, !0)
-                this.toggleDateWarning();
             }, this));
             i.bind("change", $.proxy(function(e) {
                 
                 this.updateConsecutiveDate(e, !0)
                 this.updateFormatedRequestedDates(e, !0)
-                this.toggleDateWarning();
             }, this));
             r.bind("change", $.proxy(function(e) {
                 
                 this.updateConsecutiveDate(e, !0)
                 this.updateFormatedRequestedDates(e, !0)
-                this.toggleDateWarning();
             }, this));
 
         }, this)
@@ -184,6 +181,26 @@ function(window, $) {
         $(".fsField").bind("change", $.proxy(function(e, state=!0, stateTwo=!0) {
             this.checkFormat(e.target, state, stateTwo)
         }, this)),
+
+        $("div[fs-field-validation-name='ConsecutiveDateFields'] textarea").val().split(";").forEach(function(e) {
+            //var fs = this;
+            var fieldId = $("div[fs-field-validation-name='" + e + "']").get(0).id.match(/(\d+)/)[1],
+            t = $("#field" + fieldId + "Y"),
+            i = $("#field" + fieldId + "M"),
+            r = $("#field" + fieldId + "D");
+            
+            t.bind("change", $.proxy(function(e) {
+                this.toggleDateWarning();
+            }, this));
+            i.bind("change", $.proxy(function(e) {
+                this.toggleDateWarning();
+            }, this));
+            r.bind("change", $.proxy(function(e) {
+                this.toggleDateWarning();
+            }, this));
+
+        }, this)
+        ,
          $(".fsCheckAllOption").bind("change", $.proxy(function(e) {
             Formstack.Util.checkAll(e)
         }, this)), $(".fsField.fsFormatNumber.fsRequired").bind("blur", $.proxy(function(e) {
